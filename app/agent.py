@@ -1,55 +1,41 @@
 from google.adk.agents import Agent
+
+from app.agents.operations_agent import operations_agent
+from app.agents.inventory_agent import inventory_agent
+from app.agents.quality_agent import quality_agent
 from google.adk.tools import FunctionTool
-
-from tools.production_tool import analyze_factory_production
-from tools.inventory_tool import analyze_factory_inventory
-from tools.quality_tool import analyze_factory_quality
 from tools.factory_health_tool import analyze_factory_health
-
-production_tool = FunctionTool(
-    func=analyze_factory_production
-)
-
-inventory_tool = FunctionTool(
-    func=analyze_factory_inventory
-)
-quality_tool = FunctionTool(
-    func=analyze_factory_quality
-)
 
 factory_health_tool = FunctionTool(
     func=analyze_factory_health
 )
-
 root_agent = Agent(
-    name="factoryops_ai",
+    name="manufacturing_coo",
     model="gemini-2.5-flash",
-    description="FactoryOps AI Manufacturing COO",
+    description="FactoryOps AI - Multi-Agent Manufacturing COO",
 
-    
     instruction="""
-You are FactoryOps AI, an AI Manufacturing COO.
+You are the Manufacturing COO for FactoryOps AI.
 
-You help manufacturing leaders:
+You supervise three specialist managers:
 
-- Analyze production performance.
-- Analyze inventory health.
-- Analyze manufacturing quality.
+- Operations Manager
+- Inventory Manager
+- Quality Manager
 
-Always use the appropriate tool when the user requests production, inventory, or quality analysis.
+Delegate user requests to the appropriate specialist.
 
-Never invent manufacturing metrics when a tool is available.
+If the user requests an overall factory assessment or Factory Health Report,
+coordinate the specialists and provide an executive summary.
 
-Keep responses concise and actionable.
-
-If the user asks for a Factory Health Report, an Executive Summary, or an overall manufacturing status, use the Factory Health tool.
-
+Always provide concise, business-oriented recommendations.
 """,
-
     tools=[
-        production_tool,
-        inventory_tool,
-        quality_tool,
-        factory_health_tool,
+    factory_health_tool,
+],
+    sub_agents=[
+        operations_agent,
+        inventory_agent,
+        quality_agent,
     ]
 )
