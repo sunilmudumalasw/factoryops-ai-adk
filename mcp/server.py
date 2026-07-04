@@ -1,0 +1,30 @@
+from mcp.server.fastmcp import FastMCP
+
+from production import get_production_summary
+from inventory import get_inventory_summary
+from quality import get_quality_summary
+
+# Create the Manufacturing MCP Server
+mcp = FastMCP("FactoryOps Manufacturing MCP")
+
+
+@mcp.tool()
+def production_summary() -> dict:
+    """Returns the production summary."""
+    return get_production_summary()
+
+
+@mcp.tool()
+def inventory_summary() -> dict:
+    """Returns the inventory summary."""
+    return get_inventory_summary()
+
+
+@mcp.tool()
+def quality_summary() -> dict:
+    """Returns the quality summary."""
+    return get_quality_summary()
+
+
+if __name__ == "__main__":
+    mcp.run(transport="stdio")
