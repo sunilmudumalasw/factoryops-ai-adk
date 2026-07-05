@@ -8,6 +8,7 @@ sys.path.append(str(PROJECT_ROOT))
 import streamlit as st
 
 from tools.factory_health_tool import analyze_factory_health
+from business.audit_log import log_decision
 
 st.set_page_config(
     page_title="FactoryOps AI",
@@ -18,9 +19,19 @@ st.set_page_config(
 st.title("🏭 FactoryOps AI")
 st.subheader("Multi-Agent Manufacturing COO")
 
-if st.button("Analyze Factory"):
+if "report" not in st.session_state:
+    st.session_state.report = None
 
-    report = analyze_factory_health()
+if "decision_status" not in st.session_state:
+    st.session_state.decision_status = None
+
+if st.button("Analyze Factory"):
+    st.session_state.report = analyze_factory_health()
+    st.session_state.decision_status = None
+
+if st.session_state.report:
+
+    report = st.session_state.report
 
     st.header("🏭 Factory Health Report")
 
@@ -33,6 +44,75 @@ if st.button("Analyze Factory"):
     # Executive Summary
     st.subheader("Executive Summary")
     st.info(report["executive_summary"])
+    st.divider()
+
+    st.subheader("🧠 Executive Decision")
+
+    decision = report["executive_decision"]
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.metric("Risk Level", decision["risk_level"])
+        st.metric("Business Priority", decision["business_priority"])
+
+    with col2:
+        st.metric("Business Impact", decision["estimated_business_impact"])
+
+    if decision["approval_required"]:
+        st.error("⚠ Executive Approval Required")
+    else:
+        st.success("✅ No Approval Required")
+
+    if decision["approval_required"] and st.session_state.decision_status is None:
+        col1, col2 = st.columns(2)
+
+        with col1:
+            if st.button("✅ Approve Decision"):
+                log_decision("APPROVED", decision)
+                st.session_state.decision_status =   "APPROVED"
+                st.rerun()
+
+        with col2:
+            if st.button("❌ Reject Decision"):
+                log_decision("REJECTED", decision)
+                st.session_state.decision_status = "REJECTED"
+                st.rerun()
+    if st.session_state.decision_status == "APPROVED":
+        st.success("✅ Executive Decision Approved")
+
+        st.info(
+            """
+**Next Action**
+
+• Launch immediate quality investigation
+
+• Notify Quality Manager
+
+• Schedule corrective action review
+
+• Monitor defect trend over the next production cycle
+"""
+    )
+
+    elif st.session_state.decision_status == "REJECTED":
+        st.warning("❌ Executive Decision Rejected")
+
+        st.info(
+            """
+**Next Action**
+
+• Recommendation has been cancelled
+
+• No operational changes will be executed
+
+• Continue monitoring factory health
+"""
+    )
+
+    st.info(f"**Recommended Action:** {decision['recommended_action']}")
+
+    st.caption(f"Reason: {decision['reason']}")
     st.divider()
 
     st.subheader("Key Performance Indicators")

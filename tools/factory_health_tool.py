@@ -1,6 +1,7 @@
 from tools.production_tool import analyze_factory_production
 from tools.inventory_tool import analyze_factory_inventory
 from tools.quality_tool import analyze_factory_quality
+from business.executive_decision import make_executive_decision
 
 
 def analyze_factory_health():
@@ -41,12 +42,19 @@ def analyze_factory_health():
         f"Inventory status is {inventory['status']}. "
         f"Quality status is {quality['status']}."
     )
-
-    return {
-        "overall_status": overall_status,
-        "top_priority": top_priority,
-        "executive_summary": executive_summary,
+    decision = make_executive_decision(
+    {
         "production": production,
         "inventory": inventory,
         "quality": quality,
     }
+)
+    return {
+    "overall_status": overall_status,
+    "top_priority": top_priority,
+    "executive_summary": executive_summary,
+    "production": production,
+    "inventory": inventory,
+    "quality": quality,
+    "executive_decision": decision,
+}

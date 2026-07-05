@@ -26,7 +26,7 @@ async def main():
             print("Connected to FactoryOps MCP Server")
 
             result = await session.call_tool(
-                "quality_summary",
+                "factory_health_summary",
                 arguments={}
             )
 
