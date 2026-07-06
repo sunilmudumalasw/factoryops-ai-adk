@@ -1,87 +1,145 @@
-FactoryOps AI Agent Design
-1. Manufacturing COO Agent
-Responsibility
-Primary user interface
-Understand user requests
-Delegate work to specialist agents
-Produce final response
+# FactoryOps AI Agent Design
+
+## 1. Manufacturing COO Agent
+
+### Responsibility
+
+- Primary user interface
+- Understand user requests
+- Delegate work to specialist agents
+- Consolidate factory health results
+- Present executive recommendations
+
 Uses
-Operations Agent
-Inventory Agent
-Quality Agent
-Executive Agent
-2. Operations Agent
-Responsibility
+
+- Operations Agent
+- Inventory Agent
+- Quality Agent
+
+---
+
+## 2. Operations Agent
+
+### Responsibility
 
 Analyze
 
-Production
-Throughput
-OEE
-Downtime
-MCP
+- Production
+- Throughput
+- Machine Performance
+- Manufacturing Efficiency
 
-Production MCP
+Uses
 
-Skills
+- Production Tool
+- Production Skill
 
-Production Analysis
+---
 
-3. Inventory Agent
-Responsibility
+## 3. Inventory Agent
 
-Analyze
-
-Inventory
-Stock levels
-Reorder risk
-MCP
-
-Inventory MCP
-
-Skills
-
-Inventory Analysis
-
-4. Quality Agent
-Responsibility
+### Responsibility
 
 Analyze
 
-Scrap
-Defects
-Yield
-MCP
+- Inventory Levels
+- Low Stock Materials
+- Lead Time
+- Reorder Risk
 
-Quality MCP
+Uses
 
-Skills
+- Inventory Tool
+- Inventory Skill
 
-Quality Analysis
+---
 
-5. Executive Agent
+## 4. Quality Agent
+
+### Responsibility
+
+Analyze
+
+- Defects
+- Critical Defects
+- Repair Cost
+- Quality Trends
+
+Uses
+
+- Quality Tool
+- Quality Skill
+
+---
+
+## Business Layer (Not an Agent)
+
+### Executive Decision Engine
+
 Responsibility
 
-Combine results from all agents
+- Evaluate overall factory health
+- Assess business risk
+- Determine business priority
+- Recommend executive actions
+- Determine whether human approval is required
 
-Generate
+Uses
 
-Executive Summary
-Risks
-Recommendations
-Skills
+- Factory Health Report
 
-Executive Reporting
+Produces
+
+- Executive Decision
+- Risk Level
+- Business Priority
+- Recommended Action
+- Approval Required
+
+---
+
+## Overall Collaboration
 
 User
-     │
-Manufacturing COO
-     │
+
+        │
+
+        ▼
+
+Manufacturing COO Agent
+
+        │
+
 ───────────────
-│      │      │
-Ops  Inventory Quality
+
+│         │         │
+
+▼         ▼         ▼
+
+Operations Inventory Quality
+
 ───────────────
-     │
-Executive Agent
-     │
-Response
+
+        │
+
+        ▼
+
+Factory Health Tool
+
+        │
+
+        ▼
+
+Executive Decision Engine
+
+        │
+
+        ▼
+
+Human Approval Workflow
+
+        │
+
+        ▼
+
+Final Executive Recommendation

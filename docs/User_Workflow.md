@@ -1,37 +1,65 @@
-1. User opens FactoryOps AI
+1. User launches FactoryOps AI
 
-↓
+        │
+        ▼
 
-2. User asks
+2. User clicks "Analyze Factory"
 
-"Give me today's factory summary"
+        │
+        ▼
 
-↓
+3. Manufacturing COO Agent receives the request
 
-3. COO Agent receives request
+        │
+        ▼
 
-↓
+4. COO coordinates three specialist agents
 
-4. COO delegates work
+        • Operations Agent
+        • Inventory Agent
+        • Quality Agent
 
-Operations Agent
+        │
+        ▼
 
-Inventory Agent
+5. Each agent analyzes manufacturing data
 
-Quality Agent
+        • Production Analytics
+        • Inventory Analytics
+        • Quality Analytics
 
-↓
+        │
+        ▼
 
-5. Agents retrieve data via MCP
+6. Factory Health Tool consolidates all results
 
-↓
+        │
+        ▼
 
-6. Executive Agent combines results
+7. Executive Decision Engine evaluates business risk
 
-↓
+        │
+        ▼
 
-7. Human approval (if needed)
+8. Executive recommendation generated
 
-↓
+        • Risk Level
+        • Business Priority
+        • Recommended Action
 
-8. Final recommendation displayed
+        │
+        ▼
+
+9. Human Approval Workflow
+
+        Approve / Reject
+
+        │
+        ▼
+
+10. Audit Log records the decision
+
+        │
+        ▼
+
+11. Final Executive Outcome displayed on the dashboard
